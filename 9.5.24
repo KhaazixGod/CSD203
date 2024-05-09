@@ -1,0 +1,125 @@
+class Book:
+    def __init__(self,id,title,author):
+        self.bid = id 
+        self.title = title
+        self.author = author
+        self.status = True
+class BorrowedBook:
+    def __init__(self,id,borrower):
+        self.bid = id
+        self.borrower = borrower
+
+class Node:
+    def __init__(self,book) :
+        self.data = book
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def InsertToEnd(self,book):
+        current_node = self.head
+        if current_node == None:
+            new_node = Node(book)
+            self.head = new_node
+        else:
+            while current_node.next != None:
+                current_node = current_node.next
+            new_node = Node(book)
+            current_node.next = new_node
+    
+
+    def DeleteToIndex(self,id):
+        current_node = self.head
+        if current_node.data.bid == id:
+            self.head = current_node.next
+        else:
+            while(current_node != None):
+                if current_node.data.bid == id :
+                    break
+                current_node = current_node.next
+            if current_node == None:
+                print("No book was found!")
+            else:
+                current_node.next = current_node.next.next
+    def Search(self,id):
+        current_node = self.head
+        if current_node == None:
+            return None
+        while( current_node != None):
+            if current_node.data.bid == id :
+                break
+            current_node = current_node.next
+        return current_node 
+
+
+class Menu:
+    def __init__(self) :
+        self.list_book = LinkedList()
+
+    def AddBook(self):
+        _ID = input('Enter ID of book: ')
+        _Title = input('Enter title of book: ')
+        _Author = input('Enter name of author: ')
+        new_book = Book(_ID,_Title,_Author)
+        self.list_book.InsertToEnd(new_book)
+    
+    def ViewBook(self):
+        print()
+        print('------------------------------------------------')
+        current_node = self.list_book.head
+        while current_node != None:
+            print(current_node.data.bid,end='    ')
+            print(current_node.data.title,end='     ')
+            print(current_node.data.author)
+            current_node = current_node.next
+
+
+    def DeleteBook(self):
+        _ID = input('Enter ID of book want to delete: ')
+        self.list_book.DeleteToIndex(_ID)
+
+    def BorrowBook(self):
+        _ID = input('Enter ID of book want to borrow: ')
+        book = self.list_book.Search(_ID)
+        if book == None :
+            print('No book was found!')
+        elif book.data.status == False:
+            print('Book has already been borrowed')
+        else:
+            print('Borrow successfully!')
+            book.data.status = False
+
+    def ReturnBook(self):
+        _ID = input('Enter ID of book want to return: ')
+        book = self.list_book.Search(_ID)
+        if book == None:
+            print('No book was found!')
+        else :
+            book.data.status = True
+    def Start(self):
+        while True:
+            print('1. Add book')
+            print('2. View book')
+            print('3. Delete book')
+            print('4, Borrowed Book')
+            print('5. Return Book')
+            print('6. Exit')
+            _input = input()
+            if _input == '1':
+                self.AddBook()
+            elif _input == '2':
+                self.ViewBook()
+            elif _input == '3':
+                self.DeleteBook()
+            elif _input == '4':
+                self.BorrowBook()
+            elif _input == '5':
+                self.ReturnBook()
+            else:
+                break
+        
+
+App = Menu()
+App.Start()
