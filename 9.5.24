@@ -3,7 +3,7 @@ class Book:
         self.bid = id 
         self.title = title
         self.author = author
-        self.status = True
+        self.status = 0
 class BorrowedBook:
     def __init__(self,id,borrower):
         self.bid = id
@@ -68,12 +68,15 @@ class Menu:
     def ViewBook(self):
         print()
         print('------------------------------------------------')
+        print('Bid   | Title     | Author    | Status')
         current_node = self.list_book.head
         while current_node != None:
             print(current_node.data.bid,end='    ')
             print(current_node.data.title,end='     ')
-            print(current_node.data.author)
+            print(current_node.data.author,end='   ')
+            print(current_node.data.status)
             current_node = current_node.next
+        print()
 
 
     def DeleteBook(self):
@@ -85,11 +88,11 @@ class Menu:
         book = self.list_book.Search(_ID)
         if book == None :
             print('No book was found!')
-        elif book.data.status == False:
+        elif book.data.status == 1:
             print('Book has already been borrowed')
         else:
             print('Borrow successfully!')
-            book.data.status = False
+            book.data.status = 1
 
     def ReturnBook(self):
         _ID = input('Enter ID of book want to return: ')
@@ -97,7 +100,7 @@ class Menu:
         if book == None:
             print('No book was found!')
         else :
-            book.data.status = True
+            book.data.status = 0
     def Start(self):
         while True:
             print('1. Add book')
@@ -106,7 +109,7 @@ class Menu:
             print('4, Borrowed Book')
             print('5. Return Book')
             print('6. Exit')
-            _input = input()
+            _input = input('Enter your choice: ')
             if _input == '1':
                 self.AddBook()
             elif _input == '2':
