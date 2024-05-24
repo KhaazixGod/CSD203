@@ -17,14 +17,12 @@ class Tree:
 
 
     def traversal(self,node,target):
-        #print(node.data, node.child_size, target)
         if node.data == target :
             return node
-        print(1)
         if node.child_size == 0:
             return None
         for i in node.child :
-            self.traversal(i,target)
+            return self.traversal(i,target)
 
     def getHead(self):
         return self.head
@@ -35,7 +33,6 @@ class Tree:
             self.head = new_node
         else:
             curr_node = self.head
-            print(type(parent_data))
             answer = self.traversal(curr_node,parent_data)
             if answer == None :
                 print('No')
@@ -44,7 +41,7 @@ class Tree:
                 new_node.parent = answer
     
     def search(self,data):
-        node = self.traversal(self.head,Node(data))
+        node = self.traversal(self.head,(data))
         if node == None:
             print('No')
         else:
