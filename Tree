@@ -1,0 +1,57 @@
+class Node:
+    def __init__(self,data) -> None:
+        self.data = data
+        self.parent = None
+        self.child = []
+        self.child_size = 0
+    
+    def addChild(self,data):
+        self.child_size +=1
+        new_node = Node(data)
+        self.child.append(new_node)
+
+class Tree:
+    def __init__(self) -> None:
+        self.head = None
+        self.size = 0
+
+
+    def traversal(self,node,target):
+        #print(node.data, node.child_size, target)
+        if node.data == target :
+            return node
+        print(1)
+        if node.child_size == 0:
+            return None
+        for i in node.child :
+            self.traversal(i,target)
+
+    def getHead(self):
+        return self.head
+
+    def addNode(self,parent_data,child_data):
+        new_node = Node(child_data)
+        if self.head == None:
+            self.head = new_node
+        else:
+            curr_node = self.head
+            print(type(parent_data))
+            answer = self.traversal(curr_node,parent_data)
+            if answer == None :
+                print('No')
+            else:
+                answer.addChild(child_data)
+                new_node.parent = answer
+    
+    def search(self,data):
+        node = self.traversal(self.head,Node(data))
+        if node == None:
+            print('No')
+        else:
+            print('Yes')
+
+t = Tree()
+t.addNode('','Laptop')
+t.addNode('Laptop','Asus')
+t.addNode('Asus','Main')
+t.search('Main')
